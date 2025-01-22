@@ -565,6 +565,7 @@ void sortOwners() {
             cur = cur->next;
         }
     }
+    printf("Owners sorted by name.\n");
 }
 
 void mergePokedexMenu() {
