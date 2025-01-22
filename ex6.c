@@ -552,7 +552,7 @@ void printOwnersCircular() {
 
 void sortOwners() {
     if (ownerHead == NULL) {
-        printf("0 or 1 owners only => no need to sort.\n")
+        printf("0 or 1 owners only => no need to sort.\n");
         return;
     }
     int size = getAmountOfOwners();
