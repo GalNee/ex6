@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+# define AMOUNT_OF_POKEMONS 151
 
 
 typedef enum {
@@ -237,7 +238,7 @@ void printPokemonNode(PokemonNode *node);
  * @param arr the array
  * @param size the size of the array
  */
-void collectAll(PokemonNode *root, PokemonNode *arr[], int *size);
+void collectAll(PokemonNode *root, PokemonNode *arr[AMOUNT_OF_POKEMONS], int *size);
 
 
 /**

@@ -6,7 +6,6 @@ Assignment: ex5
 #include "ex6.h"
 
 # define INT_BUFFER 128
-# define AMOUNT_OF_POKEMONS 151
 
 // ================================================
 // Basic struct definitions from ex6.h assumed:
