@@ -416,7 +416,7 @@ PokemonNode *removePokemonByID(PokemonNode *root, int id) {
 
 void evolvePokemon(OwnerNode *owner) {
     if (owner->pokedexRoot == NULL) {
-        printf("Pokedex is empty.\n");
+        printf("Cannot evolve. Pokedex empty.\n");
         return;
     }
     int id = readIntSafe("Enter ID of Pokemon to evolve: ");
@@ -444,9 +444,11 @@ void pokemonFight(OwnerNode *owner) {
         return;
     }
     PokemonData pok1 = pokedex[readIntSafe("Enter ID of the first Pokemon: ") - 1],
-            pok2 = pokedex[readIntSafe("Enter ID of the second Pokemon: ")], winner = pok1;
+            pok2 = pokedex[readIntSafe("Enter ID of the second Pokemon: ")-1], winner = pok1;
     if (searchPokemonBFS(owner->pokedexRoot, pok1.id) && searchPokemonBFS(owner->pokedexRoot, pok2.id)) {
         double pok1Score = pok1.attack * 1.5 + pok1.hp * 1.2, pok2Score = pok2.attack * 1.5 + pok2.hp * 1.2;
+        printf("Pokemon 1: %s (Score = %.2f)\nPokemon 2: %s (Score = %.2f)\n", pok1.name, pok1Score,
+            pok2.name, pok2Score);
         if (pok1Score == pok2Score) {
             printf("It’s a tie!\n");
             return;
@@ -458,7 +460,7 @@ void pokemonFight(OwnerNode *owner) {
 
 void freePokemon(OwnerNode *owner) {
     if (owner->pokedexRoot == NULL) {
-        printf("Pokedex is empty.\n");
+        printf("No Pokemon to release.\n");
         return;
     }
     int id = readIntSafe("Enter Pokemon ID to release: ");
@@ -533,9 +535,12 @@ void swapOwnerData(OwnerNode *a, OwnerNode *b) {
 }
 
 void printOwnersCircular() {
+    if (ownerHead == NULL) {
+        printf("No owners.\n");
+        return;
+    }
     printf("Enter direction (F or B): ");
-    char direction;
-    scanf(" %c", &direction);
+    char direction = getDynamicInput()[0];
     int times = readIntSafe("How many prints? ");
     OwnerNode *cur = ownerHead;
     for (int i = 0; i < times; i++) {
@@ -546,7 +551,10 @@ void printOwnersCircular() {
 }
 
 void sortOwners() {
-    if (ownerHead == NULL) return;
+    if (ownerHead == NULL) {
+        printf("0 or 1 owners only => no need to sort.\n")
+        return;
+    }
     int size = getAmountOfOwners();
     for (int i = 0; i < size - 1; i++) {
         OwnerNode *cur = ownerHead;
@@ -581,7 +589,7 @@ void mergePokedexMenu() {
 
 void deletePokedex() {
     if (ownerHead == NULL) {
-        printf("nobody is here.\n");
+        printf("No existing Pokedexes to delete.\n");
         return;
     }
     printf("\n=== Delete a Pokedex ===\n");
@@ -604,10 +612,10 @@ void deletePokedex() {
 // --------------------------------------------------------------
 void enterExistingPokedexMenu() {
     if (ownerHead == NULL) {
-        printf("nobody is here.\n");
+        printf("No existing Pokedexes.\n");
         return;
     }
-    printf("\nExisting Pokedexes (circular list):\n");
+    printf("\nExisting Pokedexes:\n");
     int size;
     printOwnerList(&size);
     int choice = readIntSafe("Choose a Pokedex by number: ");
@@ -665,7 +673,7 @@ void openPokedexMenu() {
         printf("Owner '%s' already exists. Not creating a new Pokedex.", name);
         return;
     }
-    int starterChoice = readIntSafe("Choose starter:\n1. Bulbasaur\n2. Charmander\n3. Squirtle\n");
+    int starterChoice = readIntSafe("Choose Starter:\n1. Bulbasaur\n2. Charmander\n3. Squirtle\nYour choice: ");
     if (starterChoice > 3 || starterChoice < 1) {
         printf("Invalid choice.\n");
         return;
