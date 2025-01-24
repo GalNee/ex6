@@ -429,11 +429,10 @@ void evolvePokemon(OwnerNode *owner) {
         printf("Pokemon %s (ID %d) can't evolve.\n", cur->data->name, id);
         return;
     }
-    //if the evolved version is already in the tree just remove the node
-    if (searchPokemonBFS(owner->pokedexRoot, id + 1) != NULL)
-        owner->pokedexRoot =
-                removePokemonByID(owner->pokedexRoot, id);
-    else cur->data = createPokemonData(id + 1);
+    owner->pokedexRoot = removePokemonByID(owner->pokedexRoot, id);
+    //if the evolved version is already in the tree just remove the node else:
+    if (searchPokemonBFS(owner->pokedexRoot, id + 1) == NULL)
+        insertPokemonNode(owner->pokedexRoot, createPokemonNode(id+1));
     printf("Pokemon evolved from %s (ID %d) to %s (ID %d).\n", pokedex[id - 1].name, pokedex[id - 1].id,
            pokedex[id].name, pokedex[id].id);
 }
